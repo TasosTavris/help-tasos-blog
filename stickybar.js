@@ -1,1 +1,68 @@
-<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js' type='text/javascript'></script><script style="" src="https://help-tasos-blog.googlecode.com/svn/trunk/stickybar.js"></script><script src="https://help-tasos-blog.googlecode.com/svn/trunk/stickybar2.js"></script><style>#md-stickybar{background:#000000 url('http://1.bp.blogspot.com/-TAUA592d0XY/Ut21zR3_D8I/AAAAAAAAA-o/xoYyLFV7gNM/s1600/etstickybar.png') repeat-x;width:100%;margin:0 auto;text-align:center;padding:0px 0;top:0px;color:#F40045;border-bottom:2px solid #000;/*box-shadow*/-webkit-box-shadow:#666666 0px 1px 3px;-moz-box-shadow:#666666 0px 1px 3px;box-shadow:#666666 0px 1px 3px;z-index:999;display:none;height:28px;position:absolute;line-height:1.85em;vertical-align:baseline;letter-spacing:1px;}#md-stickybar a{text-decoration:none;color:#FFFFFF;font-size:13px;font-weight:bold;font-family:arial,"Helvetica",sans-serif;line-height:24px;}#md-stickybar a:hover{text-decoration:underline;}#md-stickybar p{margin:0;list-style:none;}#md-stickybar img{vertical-align:middle;margin-right:6px;}#mdclose{padding:0px;float:right;cursor:hand;cursor:pointer;color:#ddd!important;}</style><div id='md-stickybar'><script>var nMaxPosts = 8;var nWidth = 95;var nScrollDelay = 175;var sDirection = "left";var sOpenLinkLocation = "N";var sBulletChar = ">>";</script><script style=""  src="http://http://tavristasos.blogspot.gr//feeds/posts/default?alt=json-in-script&amp;callback=RecentPostsScrollerv2&amp;max-results=8 " ></script> <noscript><a href=""></a></noscript><a href="#" id="mdclose"  onclick="return false;"><img src="http://3.bp.blogspot.com/-G6e8JYBXc1c/Ut21zKC9ZOI/AAAAAAAAA-k/_2wSICnpIok/s1600/cancel.png"/></a></div id='md-stickybar'>
+function RecentPostsScrollerv2(json) {
+	var sHeadLines;
+	var sPostURL;
+	var objPost;
+	var sMoqueeHTMLStart;
+	var sMoqueeHTMLEnd;
+	var sPoweredBy;
+	var sHeadlineTerminator;
+	var sPostLinkLocation;
+
+	try {
+		sMoqueeHTMLStart = "\<MARQUEE behavior=\"scroll\" onmouseover=\"this.stop();\" onmouseout=\"this.start();\" ";
+
+		if (nWidth) {
+			sMoqueeHTMLStart = sMoqueeHTMLStart + " width = \"" + nWidth + "%\"";
+		} else {
+			sMoqueeHTMLStart = sMoqueeHTMLStart + " width = \"100%\"";
+		}
+		if (nScrollDelay) {
+			sMoqueeHTMLStart = sMoqueeHTMLStart + " scrolldelay = \"" + nScrollDelay + "\"";
+		}
+		if (sDirection) {
+			sMoqueeHTMLStart = sMoqueeHTMLStart + " direction = \"" + sDirection + "\"\>";
+
+			if (sDirection == "left" || sDirection == "right") {
+				sHeadlineTerminator = "&nbsp;&nbsp;";
+			} else {
+				sHeadlineTerminator = "\<br/\>";
+			}
+		}
+		if (sOpenLinkLocation == "N") {
+			sPostLinkLocation = " target= \"_blank\" ";
+		} else {
+			sPostLinkLocation = " ";
+		}
+		sMoqueeHTMLEnd = "\</MARQUEE\>"
+
+		sHeadLines = "";
+
+		for (var nFeedCounter = 0; nFeedCounter < nMaxPosts; nFeedCounter++) {
+			var objPost = json.feed.entry[nFeedCounter];
+
+			if (nFeedCounter == json.feed.entry.length) break;
+
+			for (var nCounter = 0; nCounter < objPost.link.length; nCounter++) {
+				if (objPost.link[nCounter].rel == 'alternate') {
+					sPostURL = objPost.link[nCounter].href;
+					break;
+				}
+			}
+			sHeadLines = sHeadLines + "\<b\>" + sBulletChar + "\</b\> \<a " + sPostLinkLocation + " href=\"" + sPostURL + "\">" + objPost.title.$t + "\</a\>" + sHeadlineTerminator;
+		}
+		sPoweredBy = "<a tareget =\"_blank\" href=\"http://www.easytins.com\"\>Get This Widget\</a\> ~ \<a tareget =\"_blank\" href=\"http://www.easytins.com\"\>EasyTins\</a\>";
+
+		if (sDirection == "left") {
+			sHeadLines = sHeadLines + "&nbsp;&nbsp;" + sPoweredBy;
+		} else if (sDirection == "right") {
+			sHeadLines = sPoweredBy + "&nbsp;&nbsp;" + sHeadLines;
+		} else if (sDirection == "up") {
+			sHeadLines = sHeadLines + "\<br/\>" + sPoweredBy;
+		} else {
+			sHeadLines = sPoweredBy + "\<br/\>" + sHeadLines;
+		}
+		document.write(sMoqueeHTMLStart + sHeadLines + sMoqueeHTMLEnd)
+	} catch (exception) {
+		alert(exception);
+	}
+}
