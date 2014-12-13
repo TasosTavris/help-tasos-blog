@@ -50,7 +50,7 @@ function RecentPostsScrollerv2(json) {
 			}
 			sHeadLines = sHeadLines + "\<b\>" + sBulletChar + "\</b\> \<a " + sPostLinkLocation + " href=\"" + sPostURL + "\">" + objPost.title.$t + "\</a\>" + sHeadlineTerminator;
 		}
-		sPoweredBy = "<a tareget =\"_blank\" href=\"http://www.easytins.com\"\>Get This Widget\</a\> ~ \<a tareget =\"_blank\" href=\"http://www.easytins.com\"\>EasyTins\</a\>";
+		sPoweredBy = "<a tareget =\"_blank\" href=\"http://http://tavristasos.blogspot.gr\"\>Get This Widget\</a\> ~ \<a tareget =\"_blank\" href=\"http://http://tavristasos.blogspot.gr/\"\>TavrisTasos\</a\>";
 
 		if (sDirection == "left") {
 			sHeadLines = sHeadLines + "&nbsp;&nbsp;" + sPoweredBy;
